@@ -65,6 +65,23 @@ class App extends Component {
         });
     }
 
+    putTask(item){
+        let id = item.props.item.id;
+        fetch(todoUrl +"/"+ id,{
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method : 'PUT',
+            body: JSON.stringify(item.props.item)
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+        }).catch(function(error){
+            console.log(error)
+        });
+    }
+
     componentWillMount(){
         this.fetchTasks();
     }
@@ -93,8 +110,8 @@ class App extends Component {
     }
 
     toogleItem(item) {
-        var taskId = item.props.item.id;
-        var tasks = this.state.tasks;
+        let taskId = item.props.item.id;
+        let tasks = this.state.tasks;
         for (var i in tasks) {
             if (tasks[i].id === taskId) {
                 tasks[i].status = tasks[i].status === 'true' ? 'false' : 'true';
@@ -102,23 +119,7 @@ class App extends Component {
             }
         }
         this.setState({ tasks: tasks });
-
-        fetch(todoUrl +"/"+ taskId,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method : 'PUT',
-            body: JSON.stringify(item.props.item)
-        }).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-            console.log(data);
-
-        }).catch(function(error){
-            console.log(error)
-        });
-
+        this.putTask(item);
         return;
     }
 
