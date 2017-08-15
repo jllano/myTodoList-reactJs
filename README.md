@@ -1,5 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-
+Simple Todo list app using ReactJs on frontend and goLang on Backend.
 
 # myTodoList-reactJs
 
