@@ -1,0 +1,25 @@
+.todo{
+  width: 600px;
+  margin: auto;
+}
+.vert-offset-top-0{
+  margin-top: 0em;
+}
+.vert-offset-top-2{
+  margin-top: 2em;
+}
+
+.container {
+  margin-top:100px;
+}
+
+.pull-right{
+  float: right;
+}
+
+.pull-left{
+  float: left;
+}
+.user{
+  color: #fff;
+}
