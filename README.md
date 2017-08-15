@@ -7,4 +7,6 @@ Simple Todo list app using ReactJs on frontend and goLang on Backend.
 
 ### GoLang api implementation
 
-> https://github.com/jllano/myTodoList
+```
+https://github.com/jllano/myTodoList
+```
