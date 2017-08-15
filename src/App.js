@@ -5,6 +5,7 @@ import Header from './Components/template/Header';
 import Todo from './Components/Todo';
 
 var user = "user";
+const todoUrl = "http://localhost:12345/todos";
 
 class App extends Component {
 
@@ -14,13 +15,11 @@ class App extends Component {
             tasks: [],
             completed: 0,
         };
-        //USE EXPRESS?
-
     }
 
-    getTasks(){
+    fetchTasks(){
         let that = this;
-        fetch("http://localhost:12345/todos",{
+        fetch(todoUrl,{
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -29,16 +28,14 @@ class App extends Component {
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
-            that.setState({tasks: data}, function () {
-                console.log(that.state);
-            });
+            that.setState({tasks: data}, function () {});
         }).catch(function(error){
-            console.log(error)
+
         });
     }
 
     componentWillMount(){
-        this.getTasks();
+        this.fetchTasks();
     }
 
     addItem(item){
@@ -52,7 +49,7 @@ class App extends Component {
         tasks.push(item);
         this.setState({tasks:tasks});
 
-        fetch("http://localhost:12345/todos/" + item.id,{
+        fetch(todoUrl +"/"+ item.id,{
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -81,7 +78,7 @@ class App extends Component {
 
         this.setState({ tasks: tasks });
 
-        fetch("http://localhost:12345/todos/" + taskId,{
+        fetch(todoUrl +"/"+ taskId,{
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -110,7 +107,7 @@ class App extends Component {
         }
         this.setState({ tasks: tasks });
 
-        fetch("http://localhost:12345/todos/" + taskId,{
+        fetch(todoUrl +"/"+ taskId,{
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
