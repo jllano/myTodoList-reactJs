@@ -50,6 +50,21 @@ class App extends Component {
         });
     }
 
+    deleteTask(id){
+        fetch(todoUrl +"/"+ id,{
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method : 'DELETE',
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+        }).catch(function(error){
+            console.log(error)
+        });
+    }
+
     componentWillMount(){
         this.fetchTasks();
     }
@@ -67,32 +82,14 @@ class App extends Component {
     }
 
     removeItem(item){
-
         let taskId = item.props.item.id;
         let tasks = this.state.tasks;
-
         tasks = tasks.filter(function (el) {
             return el.id !== taskId;
         });
-
         this.setState({ tasks: tasks });
-
-        fetch(todoUrl +"/"+ taskId,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method : 'DELETE',
-        }).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-            console.log(data);
-        }).catch(function(error){
-            console.log(error)
-        });
-
+        this.deleteTask(taskId);
         return;
-
     }
 
     toogleItem(item) {
