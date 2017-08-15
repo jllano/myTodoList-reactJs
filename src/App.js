@@ -34,13 +34,28 @@ class App extends Component {
         });
     }
 
+    postTask(task){
+        fetch(todoUrl +"/"+ task.id,{
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method : 'POST',
+            body: JSON.stringify(task)
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+        }).catch(function(error){
+            console.log(error)
+        });
+    }
+
     componentWillMount(){
         this.fetchTasks();
     }
 
     addItem(item){
         let tasks = this.state.tasks;
-
         tasks = tasks.filter(function (el) {
             if(el.title !== item.title){
                 return tasks;
@@ -48,23 +63,7 @@ class App extends Component {
         });
         tasks.push(item);
         this.setState({tasks:tasks});
-
-        fetch(todoUrl +"/"+ item.id,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method : 'POST',
-            body: JSON.stringify(item)
-        }).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-            console.log(data);
-
-        }).catch(function(error){
-            console.log(error)
-        });
-
+        this.postTask(item);
     }
 
     removeItem(item){
