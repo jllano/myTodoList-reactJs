@@ -60,7 +60,7 @@ class App extends Component {
             }
         }
         this.setState({ tasks: tasks });
-        TodoRepository.putTask(item);
+        TodoRepository.putTask(taskId, item.props.item);
         return;
     }
 

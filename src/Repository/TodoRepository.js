@@ -37,11 +37,10 @@ class TodoRepository extends EventEmitter{
         });
     }
 
-    putTask(item){
-        let id = item.props.item.id;
+    putTask(id, task){
         fetch(todoUrl +"/"+ id,{
             method : 'PUT',
-            body: JSON.stringify(item.props.item)
+            body: JSON.stringify(task)
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
