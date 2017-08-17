@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './Components/template/Header';
 import Todo from './Components/Todo';
+import TodoRepository from './Repository/TodoRepository';
 
 var user = "user";
-const todoUrl = "http://localhost:12345/todos";
 
 class App extends Component {
 
@@ -16,74 +16,15 @@ class App extends Component {
             completed: 0,
         };
     }
-
-    fetchTasks(){
-        let that = this;
-        fetch(todoUrl,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method : 'GET'
-        }).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-            that.setState({tasks: data}, function () {});
-        }).catch(function(error){
-
-        });
-    }
-
-    postTask(task){
-        fetch(todoUrl +"/"+ task.id,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method : 'POST',
-            body: JSON.stringify(task)
-        }).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-        }).catch(function(error){
-            console.log(error)
-        });
-    }
-
-    deleteTask(id){
-        fetch(todoUrl +"/"+ id,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method : 'DELETE',
-        }).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-        }).catch(function(error){
-            console.log(error)
-        });
-    }
-
-    putTask(item){
-        let id = item.props.item.id;
-        fetch(todoUrl +"/"+ id,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method : 'PUT',
-            body: JSON.stringify(item.props.item)
-        }).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-        }).catch(function(error){
-            console.log(error)
-        });
-    }
-
     componentWillMount(){
-        this.fetchTasks();
+        var todos = TodoRepository.fetchTasks().then(json => {
+            return json;
+        });
+
+        let that = this;
+        todos.then(function(data){
+            that.setState({tasks: data })
+        });
     }
 
     addItem(item){
@@ -95,7 +36,7 @@ class App extends Component {
         });
         tasks.push(item);
         this.setState({tasks:tasks});
-        this.postTask(item);
+        TodoRepository.postTask(item);
     }
 
     removeItem(item){
@@ -105,7 +46,7 @@ class App extends Component {
             return el.id !== taskId;
         });
         this.setState({ tasks: tasks });
-        this.deleteTask(taskId);
+        TodoRepository.deleteTask(taskId);
         return;
     }
 
@@ -119,7 +60,7 @@ class App extends Component {
             }
         }
         this.setState({ tasks: tasks });
-        this.putTask(item);
+        TodoRepository.putTask(item);
         return;
     }
 
