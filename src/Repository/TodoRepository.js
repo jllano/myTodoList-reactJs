@@ -10,20 +10,12 @@ class TodoRepository extends EventEmitter{
 
     fetchTasks(){
         return fetch(todoUrl,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
             method : 'GET'
         }).then(response => response.json());
     }
 
     postTask(task){
         fetch(todoUrl +"/"+ task.id,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
             method : 'POST',
             body: JSON.stringify(task)
         }).then(function(response) {
@@ -36,10 +28,6 @@ class TodoRepository extends EventEmitter{
 
     deleteTask(id){
         fetch(todoUrl +"/"+ id,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
             method : 'DELETE',
         }).then(function(response) {
             return response.json();
@@ -52,10 +40,6 @@ class TodoRepository extends EventEmitter{
     putTask(item){
         let id = item.props.item.id;
         fetch(todoUrl +"/"+ id,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
             method : 'PUT',
             body: JSON.stringify(item.props.item)
         }).then(function(response) {
