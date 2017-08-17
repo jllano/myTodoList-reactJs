@@ -9,4 +9,6 @@ Simple Todo list app using ReactJs on frontend and goLang on Backend.
 
 https://github.com/jllano/myTodoList
 
- > NEXT? use react-redux to hadle data and events...
+
+## NEXT? 
+ > use react-redux to handle data and events...
